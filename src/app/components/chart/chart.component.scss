@@ -1,0 +1,15 @@
+.chart-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  text-align: center;
+
+  h3 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  canvas {
+    max-height: 400px;
+  }
+}

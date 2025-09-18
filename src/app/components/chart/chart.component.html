@@ -1,0 +1,11 @@
+<div class="chart-container">
+  <h3>Test Pie Chart</h3>
+  <canvas
+    baseChart
+    [data]="pieChartData"
+    [type]="pieChartType"
+    [options]="pieChartOptions"
+    (chartClick)="onChartClick($event)"
+    (chartHover)="onChartHover($event)">
+  </canvas>
+</div>
