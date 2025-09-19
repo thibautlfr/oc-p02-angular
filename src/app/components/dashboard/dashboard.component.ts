@@ -68,8 +68,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   public onSelect(event: any): void {
     console.log(`Navigate to country: ${event.name}`);
-    // TODO: Implement navigation to detail page
-    // this.router.navigate(['/detail', event.name]);
+    // Navigate to country detail page
+    this.router.navigate(['/country', event.name]);
   }
 
   public onActivate(event: any): void {

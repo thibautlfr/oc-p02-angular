@@ -1,0 +1,47 @@
+<div class="country-detail-container" *ngIf="country">
+  <!-- Back Button -->
+  <button class="back-button" (click)="goBack()">
+    ← Back
+  </button>
+
+  <!-- Country Title Container -->
+  <h1 class="country-title">{{ country.country }}</h1>
+
+  <!-- Stats Section -->
+  <div class="stats-section">
+    <div class="stat-item">
+      <span class="stat-number">{{ totalParticipations }}</span>
+      <span class="stat-label">Number of entries</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">{{ totalMedals }}</span>
+      <span class="stat-label">Total medals</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">{{ totalAthletes }}</span>
+      <span class="stat-label">Total athletes</span>
+    </div>
+  </div>
+
+  <!-- Chart Section -->
+  <div class="chart-section">
+    <ngx-charts-line-chart
+      [results]="lineChartData"
+      [scheme]="colorScheme"
+      [xAxis]="true"
+      [yAxis]="true"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      [xAxisLabel]="'Olympic Year'"
+      [yAxisLabel]="'Number of Medals'"
+      [view]="[800, 400]"
+      [curve]="'linear'"
+      [timeline]="false">
+    </ngx-charts-line-chart>
+  </div>
+</div>
+
+<!-- Loading or Error State -->
+<div class="loading-container" *ngIf="!country">
+  <p>Loading country data...</p>
+</div>

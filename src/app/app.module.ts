@@ -8,10 +8,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HomeComponent } from './pages/home/home.component';
+import { CountryDetailComponent } from './pages/country-detail/country-detail.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NotFoundComponent, DashboardComponent],
+  declarations: [AppComponent, HomeComponent, CountryDetailComponent, NotFoundComponent, DashboardComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, CommonModule, BrowserAnimationsModule, NgxChartsModule],
   providers: [],
   bootstrap: [AppComponent],
