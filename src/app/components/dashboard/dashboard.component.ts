@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { ChartData, ChartConfiguration, ChartType, ChartEvent, ActiveElement } from 'chart.js';
 import { Subscription } from 'rxjs';
 import { Olympic } from '../../core/models/Olympic';
 import { OlympicService } from '../../core/services/olympic.service';
@@ -13,41 +12,10 @@ import { OlympicService } from '../../core/services/olympic.service';
 export class DashboardComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
-  // Chart configuration
-  public pieChartType: ChartType = 'pie';
-  public pieChartData: ChartData<'pie'> = {
-    labels: [],
-    datasets: [{
-      data: [],
-      backgroundColor: [
-        '#956065',
-        '#B8CBE7',
-        '#89A1DB',
-        '#793D52',
-        '#9780A1',
-        '#BFE0F1'
-      ]
-    }]
-  };
+  // Chart configuration for ngx-charts
+  public pieChartData: any[] = [];
 
-  public pieChartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: true,
-        position: 'top'
-      },
-      tooltip: {
-        callbacks: {
-          label: (context) => {
-            const countryName = context.label || '';
-            const medalCount = context.parsed;
-            return `${countryName}: ${medalCount} medals`;
-          }
-        }
-      }
-    }
-  };
+  public colorScheme = 'vivid';
 
   // Dashboard stats
   public totalCountries: number = 0;
@@ -74,26 +42,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   private updateDashboardData(olympics: Olympic[]): void {
     // Calculate total medals per country for pie chart
-    const chartLabels: string[] = [];
-    const chartData: number[] = [];
-
-    olympics.forEach(olympic => {
+    this.pieChartData = olympics.map(olympic => {
       const totalMedals = olympic.participations.reduce(
         (total, participation) => total + participation.medalsCount,
         0
       );
-      chartLabels.push(olympic.country);
-      chartData.push(totalMedals);
+      return {
+        name: olympic.country,
+        value: totalMedals
+      };
     });
-
-    // Update chart data
-    this.pieChartData = {
-      labels: chartLabels,
-      datasets: [{
-        data: chartData,
-        backgroundColor: this.pieChartData.datasets[0].backgroundColor
-      }]
-    };
 
     // Update stats
     this.totalCountries = olympics.length;
@@ -107,20 +65,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.totalJOs = uniqueYears.size;
   }
 
-  public onChartClick(event: any): void {
-    const canvasPosition = event.event;
-    const datasetIndex = event.active?.[0]?.datasetIndex;
-    const index = event.active?.[0]?.index;
-
-    if (index !== undefined && this.pieChartData.labels) {
-      const countryName = this.pieChartData.labels[index];
-      console.log(`Navigate to country: ${countryName}`);
-      // TODO: Implement navigation to detail page
-      // this.router.navigate(['/detail', countryName]);
-    }
+  public onSelect(event: any): void {
+    console.log(`Navigate to country: ${event.name}`);
+    // TODO: Implement navigation to detail page
+    // this.router.navigate(['/detail', event.name]);
   }
 
-  public onChartHover(event: any): void {
-    // Chart hover handled by tooltip configuration
+  public onActivate(event: any): void {
+    // Chart hover handled by ngx-charts
+  }
+
+  public onDeactivate(event: any): void {
+    // Chart hover handled by ngx-charts
   }
 }

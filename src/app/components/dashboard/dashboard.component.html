@@ -27,13 +27,15 @@
 
   <!-- Chart Section -->
   <div class="chart-section">
-    <canvas
-      baseChart
-      [data]="pieChartData"
-      [type]="pieChartType"
-      [options]="pieChartOptions"
-      (chartClick)="onChartClick($event)"
-      (chartHover)="onChartHover($event)">
-    </canvas>
+    <ngx-charts-pie-chart
+      [results]="pieChartData"
+      [scheme]="colorScheme"
+      [labels]="true"
+      [doughnut]="false"
+      [view]="[700, 400]"
+      (select)="onSelect($event)"
+      (activate)="onActivate($event)"
+      (deactivate)="onDeactivate($event)">
+    </ngx-charts-pie-chart>
   </div>
 </div>
