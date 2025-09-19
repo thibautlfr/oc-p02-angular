@@ -1,0 +1,41 @@
+<div class="dashboard-container">
+  <!-- Application Context Header -->
+  <header class="app-context">
+    <h1 class="app-title">Olympic Games Dashboard</h1>
+    <p class="app-description">
+      Discover the performance of countries in recent Olympic Games.
+      Explore medal distributions and dive into detailed statistics for each participating nation.
+      Click on any country in the chart below to view detailed participation history.
+    </p>
+  </header>
+
+  <!-- Dashboard Title -->
+  <h2 class="dashboard-title">Medals per Country</h2>
+
+  <!-- Stats Section -->
+  <div class="stats-section">
+    <div class="stat-item">
+      <span class="stat-number">{{ totalJOs }}</span>
+      <span class="stat-label">Number of JOs</span>
+    </div>
+    <div class="stat-divider">|</div>
+    <div class="stat-item">
+      <span class="stat-number">{{ totalCountries }}</span>
+      <span class="stat-label">Number of countries</span>
+    </div>
+  </div>
+
+  <!-- Chart Section -->
+  <div class="chart-section">
+    <ngx-charts-pie-chart
+      [results]="pieChartData"
+      [scheme]="colorScheme"
+      [labels]="true"
+      [doughnut]="false"
+      [view]="[700, 400]"
+      (select)="onSelect($event)"
+      (activate)="onActivate($event)"
+      (deactivate)="onDeactivate($event)">
+    </ngx-charts-pie-chart>
+  </div>
+</div>
