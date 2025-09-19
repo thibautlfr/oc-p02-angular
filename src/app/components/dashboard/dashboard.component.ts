@@ -15,18 +15,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   // Chart configuration for ngx-charts
   public pieChartData: any[] = [];
 
-  // Custom color mapping for countries
-  private countryColors: { [key: string]: string } = {
-    'Italy': '#956065',
-    'Spain': '#B8CBE7',
-    'France': '#9780A1',
-    'United States': '#89A1DB',
-    'Germany': '#793D52'
-  };
-
-  public colorScheme: any = {
-    domain: []
-  };
+  public colorScheme: any = 'cool';
 
   // Dashboard stats
   public totalCountries: number = 0;
@@ -64,12 +53,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       };
     });
 
-    // Set up custom color scheme based on countries order
-    this.colorScheme = {
-      domain: olympics.map(olympic =>
-        this.countryColors[olympic.country] || '#CCCCCC'
-      )
-    };
 
     // Update stats
     this.totalCountries = olympics.length;
