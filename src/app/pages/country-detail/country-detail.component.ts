@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { curveLinear } from 'd3-shape';
 import { Olympic } from '../../core/models/Olympic';
 import { OlympicService } from '../../core/services/olympic.service';
 
@@ -18,6 +19,7 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
   // Line chart data for ngx-charts
   public lineChartData: any[] = [];
   public colorScheme: any = 'cool';
+  public curve: any = curveLinear ;
 
   // Statistics
   public totalParticipations: number = 0;
