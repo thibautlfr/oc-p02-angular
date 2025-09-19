@@ -109,7 +109,6 @@
       .stat-number {
         font-size: 2.5rem;
         font-weight: bold;
-        color: #04838F;
         line-height: 1;
 
         @media (max-width: 768px) {
@@ -119,7 +118,6 @@
 
       .stat-label {
         font-size: 1rem;
-        color: #04838F;
         margin-top: 8px;
         font-weight: 500;
 
@@ -165,6 +163,37 @@
         min-height: 300px;
       }
     }
+  }
+}
+
+// Custom Tooltip Styling - Approche globale pour ngx-charts
+:host ::ng-deep {
+  // Style pour les tooltips ngx-charts pie chart
+  .tooltip-content,
+  .tooltip .tooltip-inner,
+  .ngx-charts-tooltip-content {
+    background: rgba(0, 0, 0, 0.9) !important;
+    border-radius: 8px !important;
+    padding: 12px 16px !important;
+    color: white !important;
+    font-family: Arial, sans-serif !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    font-size: 14px !important;
+
+    // Ajouter l'icône médaille avant le texte
+    &::before {
+      content: "🥇 ";
+      font-size: 16px;
+      margin-right: 4px;
+      display: inline-block;
+    }
+  }
+
+  // Style spécifique pour les tooltips de graphiques pie
+  .pie-label {
+    font-size: 14px !important;
+    font-weight: 500 !important;
   }
 }
 
