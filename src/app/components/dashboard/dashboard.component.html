@@ -32,10 +32,8 @@
       [scheme]="colorScheme"
       [labels]="true"
       [doughnut]="false"
-      [view]="[700, 400]"
-      (select)="onSelect($event)"
-      (activate)="onActivate($event)"
-      (deactivate)="onDeactivate($event)">
+      [view]="chartView"
+      (select)="onSelect($event)">
     </ngx-charts-pie-chart>
   </div>
 </div>

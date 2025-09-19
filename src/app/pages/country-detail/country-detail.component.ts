@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { curveLinear } from 'd3-shape';
@@ -19,7 +19,10 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
   // Line chart data for ngx-charts
   public lineChartData: any[] = [];
   public colorScheme: any = 'cool';
-  public curve: any = curveLinear ;
+  public curve: any = curveLinear;
+
+  // Responsive chart configuration
+  public chartView: [number, number] = [800, 400];
 
   // Statistics
   public totalParticipations: number = 0;
@@ -33,6 +36,8 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.updateChartSize();
+
     // Get country name from route parameter
     this.countryName = this.route.snapshot.paramMap.get('countryName') || '';
 
@@ -83,5 +88,28 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
 
   public goBack(): void {
     this.router.navigate(['/']);
+  }
+
+  @HostListener('window:resize')
+  onResize(): void {
+    this.updateChartSize();
+  }
+
+  private updateChartSize(): void {
+    const width = window.innerWidth;
+
+    if (width <= 480) {
+      // Mobile phones
+      this.chartView = [width - 40, 300];
+    } else if (width <= 768) {
+      // Tablets
+      this.chartView = [width - 60, 350];
+    } else if (width <= 1024) {
+      // Small laptops
+      this.chartView = [700, 400];
+    } else {
+      // Desktop
+      this.chartView = [800, 400];
+    }
   }
 }

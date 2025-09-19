@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Olympic } from '../../core/models/Olympic';
@@ -14,8 +14,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   // Chart configuration for ngx-charts
   public pieChartData: any[] = [];
-
   public colorScheme: any = 'cool';
+
+  // Responsive chart configuration
+  public chartView: [number, number] = [700, 400];
 
   // Dashboard stats
   public totalCountries: number = 0;
@@ -27,6 +29,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.updateChartSize();
     this.subscription.add(
       this.olympicService.getOlympics().subscribe((olympics: Olympic[] | null) => {
         if (olympics) {
@@ -72,11 +75,26 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.router.navigate(['/country', event.name]);
   }
 
-  public onActivate(event: any): void {
-    // Chart hover handled by ngx-charts
+  @HostListener('window:resize')
+  onResize(): void {
+    this.updateChartSize();
   }
 
-  public onDeactivate(event: any): void {
-    // Chart hover handled by ngx-charts
+  private updateChartSize(): void {
+    const width = window.innerWidth;
+
+    if (width <= 480) {
+      // Mobile phones
+      this.chartView = [width - 40, 300];
+    } else if (width <= 768) {
+      // Tablets
+      this.chartView = [width - 60, 350];
+    } else if (width <= 1024) {
+      // Small laptops
+      this.chartView = [600, 400];
+    } else {
+      // Desktop
+      this.chartView = [700, 400];
+    }
   }
 }
