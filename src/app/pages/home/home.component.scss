@@ -1,0 +1,108 @@
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+
+  .app-context {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px 30px;
+    border-radius: 16px;
+    margin-bottom: 40px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+
+    @media (max-width: 768px) {
+      padding: 30px 20px;
+      margin-bottom: 30px;
+    }
+
+    .app-title {
+      font-size: 3rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+      @media (max-width: 768px) {
+        font-size: 2.2rem;
+        margin-bottom: 15px;
+      }
+
+      @media (max-width: 480px) {
+        font-size: 1.8rem;
+      }
+    }
+
+    .app-description {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      opacity: 0.95;
+      max-width: 800px;
+      margin: 0 auto;
+
+      @media (max-width: 768px) {
+        font-size: 1.1rem;
+        line-height: 1.5;
+      }
+
+      @media (max-width: 480px) {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .dashboard-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 30px;
+    background-color: #04838F;
+    padding: 20px 40px;
+    border-radius: 12px;
+    display: inline-block;
+
+    @media (max-width: 768px) {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      padding: 15px 30px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 1.5rem;
+      padding: 12px 20px;
+    }
+  }
+
+  .chart-section {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+
+    @media (max-width: 768px) {
+      padding: 15px 10px;
+      margin: 0 5px;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 480px) {
+      padding: 10px 5px;
+      margin: 0;
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    ngx-charts-pie-chart {
+      display: block;
+      width: 100%;
+      height: auto;
+
+      @media (max-width: 480px) {
+        min-height: 300px;
+      }
+    }
+  }
+}
