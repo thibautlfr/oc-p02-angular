@@ -1,1 +1,61 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Common Stats Section Styles */
+.stats-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 30px;
+    border: 2px solid #04838F;
+    border-radius: 12px;
+    background-color: transparent;
+    min-width: 180px;
+
+    @media (max-width: 768px) {
+      padding: 15px 20px;
+      min-width: 150px;
+    }
+
+    @media (max-width: 480px) {
+      padding: 12px 16px;
+      min-width: 120px;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      line-height: 1;
+
+      @media (max-width: 768px) {
+        font-size: 2rem;
+      }
+    }
+
+    .stat-label {
+      font-size: 1rem;
+      margin-top: 8px;
+      font-weight: 500;
+
+      @media (max-width: 768px) {
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .stat-divider {
+    display: none;
+  }
+}
