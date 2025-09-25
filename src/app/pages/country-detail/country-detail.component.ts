@@ -1,24 +1,25 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 import { curveLinear } from 'd3-shape';
 import { Olympic } from '../../core/models/Olympic';
 import { OlympicService } from '../../core/services/olympic.service';
+import { ChartUtilsService } from '../../core/services/chart-utils.service';
+import { SubscriptionManagerService } from '../../core/services/subscription-manager.service';
 
 @Component({
   selector: 'app-country-detail',
   templateUrl: './country-detail.component.html',
-  styleUrl: './country-detail.component.scss'
+  styleUrl: './country-detail.component.scss',
+  providers: [SubscriptionManagerService]
 })
 export class CountryDetailComponent implements OnInit, OnDestroy {
-  private subscription: Subscription = new Subscription();
 
   public country: Olympic | null = null;
   public countryName: string = '';
 
   // Line chart data for ngx-charts
   public lineChartData: any[] = [];
-  public colorScheme: any = 'cool';
+  public colorScheme: any;
   public curve: any = curveLinear;
 
   // Responsive chart configuration
@@ -31,9 +32,12 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
-    private olympicService: OlympicService
-  ) {}
+    private olympicService: OlympicService,
+    private chartUtils: ChartUtilsService,
+    private subscriptionManager: SubscriptionManagerService
+  ) {
+    this.colorScheme = this.chartUtils.colorScheme;
+  }
 
   ngOnInit(): void {
     this.updateChartSize();
@@ -42,7 +46,7 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
     this.countryName = this.route.snapshot.paramMap.get('countryName') || '';
 
     // Subscribe to Olympic data and find the specific country
-    this.subscription.add(
+    this.subscriptionManager.add(
       this.olympicService.getOlympics().subscribe((olympics: Olympic[] | null) => {
         if (olympics) {
           this.country = olympics.find(olympic =>
@@ -53,7 +57,7 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
             this.updateCountryData();
           } else {
             // Country not found, redirect to 404 or home
-            this.router.navigate(['/']);
+            this.chartUtils.goBack();
           }
         }
       })
@@ -61,7 +65,7 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscriptionManager.unsubscribeAll();
   }
 
   private updateCountryData(): void {
@@ -87,7 +91,7 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
   }
 
   public goBack(): void {
-    this.router.navigate(['/']);
+    this.chartUtils.goBack();
   }
 
   @HostListener('window:resize')
@@ -96,20 +100,6 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
   }
 
   private updateChartSize(): void {
-    const width = window.innerWidth;
-
-    if (width <= 480) {
-      // Mobile phones
-      this.chartView = [width - 40, 300];
-    } else if (width <= 768) {
-      // Tablets
-      this.chartView = [width - 60, 350];
-    } else if (width <= 1024) {
-      // Small laptops
-      this.chartView = [700, 400];
-    } else {
-      // Desktop
-      this.chartView = [800, 400];
-    }
+    this.chartView = this.chartUtils.calculateChartSize(800, 400);
   }
 }

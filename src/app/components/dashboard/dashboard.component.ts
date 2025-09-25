@@ -1,20 +1,20 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { Olympic } from '../../core/models/Olympic';
 import { OlympicService } from '../../core/services/olympic.service';
+import { ChartUtilsService } from '../../core/services/chart-utils.service';
+import { SubscriptionManagerService } from '../../core/services/subscription-manager.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  styleUrl: './dashboard.component.scss',
+  providers: [SubscriptionManagerService]
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  private subscription: Subscription = new Subscription();
 
   // Chart configuration for ngx-charts
   public pieChartData: any[] = [];
-  public colorScheme: any = 'cool';
+  public colorScheme: any;
 
   // Responsive chart configuration
   public chartView: [number, number] = [700, 400];
@@ -25,12 +25,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private olympicService: OlympicService,
-    private router: Router
-  ) {}
+    private chartUtils: ChartUtilsService,
+    private subscriptionManager: SubscriptionManagerService
+  ) {
+    this.colorScheme = this.chartUtils.colorScheme;
+  }
 
   ngOnInit(): void {
     this.updateChartSize();
-    this.subscription.add(
+    this.subscriptionManager.add(
       this.olympicService.getOlympics().subscribe((olympics: Olympic[] | null) => {
         if (olympics) {
           this.updateDashboardData(olympics);
@@ -40,7 +43,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscriptionManager.unsubscribeAll();
   }
 
   private updateDashboardData(olympics: Olympic[]): void {
@@ -71,8 +74,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   public onSelect(event: any): void {
     console.log(`Navigate to country: ${event.name}`);
-    // Navigate to country detail page
-    this.router.navigate(['/country', event.name]);
+    this.chartUtils.navigateToCountryDetail(event.name);
   }
 
   @HostListener('window:resize')
@@ -81,20 +83,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   private updateChartSize(): void {
-    const width = window.innerWidth;
-
-    if (width <= 480) {
-      // Mobile phones
-      this.chartView = [width - 40, 300];
-    } else if (width <= 768) {
-      // Tablets
-      this.chartView = [width - 60, 350];
-    } else if (width <= 1024) {
-      // Small laptops
-      this.chartView = [600, 400];
-    } else {
-      // Desktop
-      this.chartView = [700, 400];
-    }
+    this.chartView = this.chartUtils.calculateChartSize(700, 400);
   }
 }
