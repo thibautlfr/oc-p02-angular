@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { curveLinear } from 'd3-shape';
 import { Olympic } from '../../core/models/Olympic';
 import { OlympicService } from '../../core/services/olympic.service';
@@ -32,6 +32,7 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private olympicService: OlympicService,
     private chartUtils: ChartUtilsService,
     private subscriptionManager: SubscriptionManagerService
@@ -56,8 +57,8 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
           if (this.country) {
             this.updateCountryData();
           } else {
-            // Country not found, redirect to 404 or home
-            this.chartUtils.goBack();
+            // Country not found, redirect to 404 page
+            this.router.navigate(['/not-found']);
           }
         }
       })
