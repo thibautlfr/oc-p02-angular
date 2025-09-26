@@ -14,6 +14,10 @@ const routes: Routes = [
     component: CountryDetailComponent,
   },
   {
+    path: 'not-found',
+    component: NotFoundComponent,
+  },
+  {
     path: '**', // wildcard
     component: NotFoundComponent,
   },
