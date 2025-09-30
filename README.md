@@ -4,12 +4,13 @@ Interactive web application for Olympic Games coverage and data visualization, d
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.3.
 
-## 🚀 Quick Start
+## 🛠️ Development Commands
 
-Install dependencies before starting development:
-```bash
-npm install
-```
+- `npm install` - Install dependencies before starting development
+- `npm start` or `ng serve` - Start development server at http://localhost:4200
+- `npm run build` or `ng build` - Build the project (artifacts in dist/)
+- `npm test` or `ng test` - Run tests using Karma/Jasmine
+- `npm run watch` or `ng build --watch --configuration development` - Build in watch mode
 
 ## 📱 Application Features
 
@@ -34,14 +35,6 @@ npm install
 - **Error handling** for network issues and invalid routes
 - **Loading states** with user feedback
 - **Responsive design** across all devices
-
-## 🛠️ Development Commands
-
-- `npm install` - Install dependencies before starting development
-- `npm start` or `ng serve` - Start development server at http://localhost:4200
-- `npm run build` or `ng build` - Build the project (artifacts in dist/)
-- `npm test` or `ng test` - Run tests using Karma/Jasmine
-- `npm run watch` or `ng build --watch --configuration development` - Build in watch mode
 
 ## 🏗️ Architecture
 
