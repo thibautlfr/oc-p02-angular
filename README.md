@@ -69,19 +69,42 @@ src/app/
 The application uses mock Olympic data (`assets/mock/olympic.json`) containing:
 
 ```typescript
+/**
+ * Represents a country's complete Olympic Games history.
+ * Includes all participations across different Olympic editions.
+ */
 interface Olympic {
+  /** Unique identifier for the country */
   id: number;
+
+  /** Name of the country */
   country: string;
+
+  /** List of all Olympic Games participations for this country */
   participations: Participation[];
 }
 
+/**
+ * Represents a country's participation in a specific Olympic Games edition.
+ * Contains performance metrics including medals won and athletes sent.
+ */
 interface Participation {
+  /** Unique identifier for this participation record */
   id: number;
+
+  /** Year when the Olympic Games took place */
   year: number;
+
+  /** Host city of the Olympic Games */
   city: string;
+
+  /** Total number of medals won by the country in this edition */
   medalsCount: number;
+
+  /** Total number of athletes representing the country in this edition */
   athleteCount: number;
 }
+
 ```
 
 Data includes 5 countries (Italy, Spain, United States, Germany, France) with 3 Olympic participations each (2012, 2016, 2020).
